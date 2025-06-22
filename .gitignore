@@ -1,0 +1,24 @@
+# Global ignores
+node_modules/
+.env
+.DS_Store
+*.log
+
+# Mobile (React Native)
+mobile/node_modules/
+mobile/.expo/
+mobile/.expo-shared/
+mobile/.vscode/
+mobile/coverage/
+mobile/ios/Pods/
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/ios/build/
+mobile/metro-cache/
+mobile/.env
+
+# Backend (Node.js / Express)
+backend/node_modules/
+backend/.env
+backend/.vscode/
+backend/coverage/

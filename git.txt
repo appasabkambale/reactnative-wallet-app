@@ -1,4 +1,10 @@
 git status
 git add .
-git commit -m "Rate Limiting"
+git commit -m "Optimizing the backend code"
 git push
+
+
+for development run nodemon src/server.js
+    
+for production run node src/server.js
+

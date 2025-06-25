@@ -1,6 +1,6 @@
 git status
 git add .
-git commit -m "Setting up styles and images for mobile(frontend)"
+git commit -m "Implemented the authentication using clerk"
 git push
 
 

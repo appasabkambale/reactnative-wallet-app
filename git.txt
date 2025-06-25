@@ -1,6 +1,6 @@
 git status
 git add .
-git commit -m "Optimizing the backend code"
+git commit -m "Setting up styles and images for mobile(frontend)"
 git push
 
 

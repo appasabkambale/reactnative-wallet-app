@@ -1,6 +1,6 @@
 git status
 git add .
-git commit -m "Implemented the authentication using clerk"
+git commit -m "Designed the authentication pages"
 git push
 
 
@@ -28,3 +28,9 @@ for deploying the app use app.json file
 
 to see conetent in safearea
 const insets = useSafeAreaInsets(); 
+
+
+i have deployed the backend to the render.com
+
+to avoid the render limitations of 15 minutes use cron
+npm i cron

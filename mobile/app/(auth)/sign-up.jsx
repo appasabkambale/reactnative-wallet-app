@@ -42,7 +42,6 @@ export default function SignUpScreen() {
       } else {
         setError("An error occurred. Please try again.");
       }
-      console.log(err);
     }
   }
 
@@ -96,7 +95,7 @@ export default function SignUpScreen() {
           onChangeText={(code) => setCode(code)}
         />
         <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
-          <Text style={styles.buttonText}>Verify</Text>
+          <Text style={styles.buttonText}>Verify Email</Text>
         </TouchableOpacity>
       </View>
     )

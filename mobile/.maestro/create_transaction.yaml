@@ -1,0 +1,41 @@
+appId: com.appayya.Cashence
+---
+
+# Create Transaction Flow E2E Test
+# Assumes the user is already logged in
+
+- launchApp
+
+# Wait for home screen
+- assertVisible:
+    text: ".*Balance.*"
+    timeout: 10000
+
+# Tap the create/add transaction button
+- tapOn:
+    id: "add-transaction-button"
+
+# Wait for create screen
+- assertVisible: "Create Transaction"
+
+# Enter transaction title
+- tapOn:
+    id: "title-input"
+- inputText: "Test Lunch"
+
+# Enter amount
+- tapOn:
+    id: "amount-input"
+- inputText: "250"
+
+# Select a category (Food & Drinks)
+- tapOn: "Food & Drinks"
+
+# Submit the form
+- tapOn:
+    id: "submit-button"
+
+# Assert return to home screen with success
+- assertVisible:
+    text: ".*Balance.*"
+    timeout: 10000

@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  user_id    String
+  title      String
+  amount     Decimal
+  category   String
+  created_at DateTime @default(now())
+
+  @@map("transactions")
+}
+
+model RecurringTransaction {
+  id         Int      @id @default(autoincrement())
+  user_id    String
+  title      String
+  amount     Decimal
+  category   String
+  frequency  String   // "daily", "weekly", "monthly", "yearly"
+  next_run   DateTime
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  @@map("recurring_transactions")
+}
+
+model Budget {
+  id         Int      @id @default(autoincrement())
+  user_id    String
+  category   String
+  amount     Decimal  // monthly limit
+  month      Int
+  year       Int
+  created_at DateTime @default(now())
+
+  @@unique([user_id, category, month, year])
+  @@map("budgets")
+}

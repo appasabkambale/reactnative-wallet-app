@@ -1,0 +1,24 @@
+appId: com.appayya.Cashence
+---
+
+# Analytics Navigation Flow E2E Test
+# Assumes the user is already logged in
+
+- launchApp
+
+# Wait for home screen to load
+- assertVisible:
+    text: ".*Balance.*"
+    timeout: 10000
+
+# Tap the Analytics tab in the bottom navigation
+- tapOn: "Analytics"
+
+# Assert the analytics screen renders
+- assertVisible:
+    text: "Analytics"
+    timeout: 5000
+
+# Assert chart sections are visible
+- assertVisible: "Spending by Category"
+- assertVisible: "Income vs Expense Trend"

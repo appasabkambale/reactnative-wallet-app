@@ -1,0 +1,26 @@
+appId: com.appayya.Cashence
+---
+
+# Login Flow E2E Test
+- launchApp
+
+# Wait for the login screen to load
+- assertVisible: "Sign In"
+
+# Enter email credentials
+- tapOn:
+    id: "email-input"
+- inputText: "test@example.com"
+
+# Enter password
+- tapOn:
+    id: "password-input"
+- inputText: "testpassword123"
+
+# Tap sign-in button
+- tapOn: "Sign In"
+
+# Assert navigation to home screen
+- assertVisible:
+    text: ".*Balance.*"
+    timeout: 10000

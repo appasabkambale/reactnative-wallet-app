@@ -1,0 +1,21 @@
+appId: com.appayya.Cashence
+---
+- launchApp:
+    clearState: true
+
+# 1. Tap the Email input box (Maestro finds it by the placeholder text "Email")
+- tapOn: "Email"
+- inputText: "appayyakambale66@gmail.com"
+
+# 2. Tap the Password input box
+- tapOn: "Password"
+- inputText: "Qwe123#@>"
+
+# 3. Dismiss the keyboard so the login button is firmly visible
+- hideKeyboard
+
+# 4. Tap the Login button
+- tapOn: "Log In"
+
+# 5. Verify the login actually worked by checking that a specific word is now visible
+- assertVisible: "Wallet Balance" 

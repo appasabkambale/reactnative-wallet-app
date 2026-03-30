@@ -2,12 +2,15 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
+import helmet from "helmet";
 import rateLimiter from "./middleware/rateLimiter.js";
 import transactionsRoute from "./routes/transactionsRoute.js";
 import budgetRoute from "./routes/budgetRoute.js";
 import recurringRoute from "./routes/recurringRoute.js";
 import { initDB } from "./config/db.js";
 import job, { recurringJob } from "./config/cron.js";
+import logger from "./utils/logger.js";
+
 
 dotenv.config();
 
@@ -19,8 +22,9 @@ if(process.env.NODE_ENV === "production") {
 }
 
 // middleware
+app.use(helmet());
 app.use(cors());
-app.use(morgan("dev")); // Logs HTTP method, URL, status code, and response time
+app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev")); // Logs HTTP method, URL, status code, and response time
 app.use(rateLimiter);
 app.use(express.json());
 
@@ -34,17 +38,22 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 5001;
 
-app.get("/api/health", (req, res) => {
+// Global health check for load balancers
+app.get("/health", (req, res) => {
     res.status(200).json({ status: "ok" });
 });
 
-app.use("/api/transactions", transactionsRoute);
-app.use("/api/budgets", budgetRoute);
-app.use("/api/recurring", recurringRoute);
+app.get("/api/v1/health", (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+
+app.use("/api/v1/transactions", transactionsRoute);
+app.use("/api/v1/budgets", budgetRoute);
+app.use("/api/v1/recurring", recurringRoute);
 
 initDB().then(() => {
     app.listen(PORT, () => {
-        console.log("Server is running on port:", PORT);
+        logger.info(`Server is running on port: ${PORT}`);
     });
 });
 

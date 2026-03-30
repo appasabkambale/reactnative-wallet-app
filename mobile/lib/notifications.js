@@ -78,3 +78,4 @@ export async function checkBudgetThresholds(fetchWithAuth) {
     console.error('Budget threshold check failed:', error);
   }
 }
+

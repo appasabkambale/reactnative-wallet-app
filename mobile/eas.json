@@ -3,26 +3,26 @@
     "appVersionSource": "local"
   },
   "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "preview": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
-        "EXPO_PUBLIC_SUPABASE_URL": "https://eqmocxurxoiqqzvvlhel.supabase.co",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_kT77ZiNLGr8Vor-xCuUm7Q_T-St_85n",
-        "EXPO_PUBLIC_API_URL": "https://reactnative-wallet-app-backend-render.onrender.com/api"
       }
     },
     "apk": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
-        "EXPO_PUBLIC_SUPABASE_URL": "https://eqmocxurxoiqqzvvlhel.supabase.co",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_kT77ZiNLGr8Vor-xCuUm7Q_T-St_85n",
-        "EXPO_PUBLIC_API_URL": "https://reactnative-wallet-app-backend-render.onrender.com/api"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "apk"
       }
     }
   }

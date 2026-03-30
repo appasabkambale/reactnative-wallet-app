@@ -15,26 +15,39 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
     defaultHeaders['Authorization'] = `Bearer ${session.access_token}`;
   }
 
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      ...defaultHeaders,
-      ...options.headers,
-    },
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-  if (!response.ok) {
-    let errorMessage = "API request failed";
-    try {
-      const errorData = await response.json();
-      if (errorData.message) errorMessage = errorData.message;
-    } catch (e) {
-      // Not JSON
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+      signal: controller.signal,
+    });
+    
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      let errorMessage = "API request failed";
+      try {
+        const errorData = await response.json();
+        if (errorData.message) errorMessage = errorData.message;
+      } catch (e) {
+        // Not JSON
+      }
+      throw new Error(errorMessage);
     }
-    throw new Error(errorMessage);
-  }
 
-  // Handle 204 No Content or empty responses
-  const text = await response.text();
-  return text ? JSON.parse(text) : {};
+    // Handle 204 No Content or empty responses
+    const text = await response.text();
+    return text ? JSON.parse(text) : {};
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw { message: "Request timed out", code: "TIMEOUT" };
+    }
+    throw error;
+  }
 };

@@ -47,7 +47,7 @@ export default function AnalyticsScreen() {
         setAnalytics(data);
       }
     } catch (err) {
-      console.error("Error fetching analytics:", err);
+      console.log("Error fetching analytics:", err.message || err);
     } finally {
       setLoading(false);
     }

@@ -1,11 +1,12 @@
 import * as transactionService from "../services/transactionService.js";
+import logger from "../utils/logger.js";
 
 export async function getTransactionsByUserId(req, res) {
       try {
         const transactions = await transactionService.getTransactionsByUserIdService(req.user.id);
         res.status(200).json(transactions);
       } catch (error) {
-        console.log("Error getting transaction:", error);
+        logger.error("Error getting transaction:", error);
         res.status(500).json({message: "Internal server error"});
       }
 }
@@ -16,10 +17,9 @@ export async function createTransaction(req, res) {
     
         const transaction = await transactionService.createTransactionService(req.user.id, { title, amount, category });
     
-        console.log(transaction);
         res.status(201).json(transaction);
         } catch (error){
-        console.log("Error creating transaction:", error);
+        logger.error("Error creating transaction:", error);
         if (error.code === 'VALIDATION') {
           return res.status(400).json({ message: error.message });
         }
@@ -39,7 +39,7 @@ export async function deleteTransaction(req, res) {
     
         res.status(200).json({ message: "Transaction deleted successfully" });
       } catch (error) {
-        console.log("Error deleting transaction:", error);
+        logger.error("Error deleting transaction:", error);
         if (error.code === 'NOT_FOUND') {
             return res.status(404).json({message: "Transaction not found"});
         }
@@ -53,7 +53,7 @@ export async function getSummaryByUserId(req, res) {
         const summaryPayload = await transactionService.getSummaryByUserIdService(req.user.id);
         res.status(200).json(summaryPayload);
       } catch (error) {
-        console.log("Error getting the summary:", error);
+        logger.error("Error getting the summary:", error);
         res.status(500).json({ message: "Internal server error" });
       }
 }
@@ -64,7 +64,7 @@ export async function getAnalytics(req, res) {
     const analytics = await transactionService.getAnalyticsService(req.user.id, month, year);
     res.status(200).json(analytics);
   } catch (error) {
-    console.log("Error getting analytics:", error);
+    logger.error("Error getting analytics:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -74,7 +74,7 @@ export async function searchTransactions(req, res) {
     const result = await transactionService.searchTransactionsService(req.user.id, req.query);
     res.status(200).json(result);
   } catch (error) {
-    console.log("Error searching transactions:", error);
+    logger.error("Error searching transactions:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -180,7 +180,7 @@ export async function exportTransactions(req, res) {
 
     res.status(200).json(transactions);
   } catch (error) {
-    console.log("Error exporting transactions:", error);
+    logger.error("Error exporting transactions:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }

@@ -1,11 +1,12 @@
 import * as recurringService from "../services/recurringService.js";
+import logger from "../utils/logger.js";
 
 export async function getRecurringTransactions(req, res) {
   try {
     const items = await recurringService.getRecurringTransactionsService(req.user.id);
     res.status(200).json(items);
   } catch (error) {
-    console.log("Error getting recurring transactions:", error);
+    logger.error("Error getting recurring transactions:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -17,7 +18,7 @@ export async function createRecurringTransaction(req, res) {
     const item = await recurringService.createRecurringTransactionService(req.user.id, { title, amount, category, frequency });
     res.status(201).json(item);
   } catch (error) {
-    console.log("Error creating recurring transaction:", error);
+    logger.error("Error creating recurring transaction:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -32,7 +33,7 @@ export async function toggleRecurringTransaction(req, res) {
     const updated = await recurringService.toggleRecurringTransactionService(req.user.id, parsedId);
     res.status(200).json(updated);
   } catch (error) {
-    console.log("Error toggling recurring transaction:", error);
+    logger.error("Error toggling recurring transaction:", error);
     if (error.code === 'NOT_FOUND') {
       return res.status(404).json({ message: error.message });
     }
@@ -50,7 +51,7 @@ export async function deleteRecurringTransaction(req, res) {
     await recurringService.deleteRecurringTransactionService(req.user.id, parsedId);
     res.status(200).json({ message: "Recurring transaction deleted" });
   } catch (error) {
-    console.log("Error deleting recurring transaction:", error);
+    logger.error("Error deleting recurring transaction:", error);
     if (error.code === 'NOT_FOUND') {
       return res.status(404).json({ message: error.message });
     }
@@ -66,6 +67,6 @@ export async function processRecurringTransactions() {
   try {
     await recurringService.processRecurringTransactionsService();
   } catch (error) {
-    console.error("Error processing recurring transactions:", error);
+    logger.error("Error processing recurring transactions:", error);
   }
 }
